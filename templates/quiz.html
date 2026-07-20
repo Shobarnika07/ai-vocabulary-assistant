@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Quiz - Word World{% endblock %}
+{% block content %}
+<div class="container quiz-container">
+    {% if error %}
+        <div class="section">
+            <div class="empty-state">
+                <div class="empty-emoji">&#128566;</div>
+                <p>{{ error }}</p>
+                <br>
+                <a href="{{ url_for('add_word') }}" class="btn btn-primary">&#10133; Add Words Now!</a>
+            </div>
+        </div>
+    {% elif not question %}
+        <div class="section">
+            <div class="empty-state">
+                <div class="empty-emoji">&#127793;</div>
+                <p>No questions available yet!</p>
+            </div>
+        </div>
+    {% else %}
+        <div class="quiz-header">
+            <h1>&#127921; Word Quiz!</h1>
+            {% if progress is not none %}
+                <div class="accuracy-bar">
+                    &#127942; Accuracy: {{ progress }}%
+                </div>
+            {% endif %}
+        </div>
+
+        {% if last_correct is not none %}
+        <div class="feedback {% if last_correct %}correct{% else %}wrong{% endif %}">
+            {% if last_correct %}
+                &#127881; Correct! Amazing job! &#11088;
+            {% else %}
+                &#128532; Oops! The answer was: <strong>{{ last_word.word }}</strong> - {{ last_word.meaning }}
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="quiz-question">
+            <p class="question-label">What does this word mean?</p>
+            <h2 class="question-word">{{ question.word }}</h2>
+        </div>
+
+        <form method="POST" action="{{ url_for('quiz_answer') }}">
+            <input type="hidden" name="word_id" value="{{ question.id }}">
+            <div class="options-grid">
+                {% for opt in options %}
+                <button type="submit" name="chosen_id" value="{{ opt.id }}" class="option-btn">
+                    {{ opt.meaning }}
+                </button>
+                {% endfor %}
+            </div>
+        </form>
+
+        <div class="quiz-footer">
+            <span>&#128218; Words in pool: {{ total }}</span>
+            {% if question.example %}
+                <span class="example-hint">&#128172; "{{ question.example }}"</span>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

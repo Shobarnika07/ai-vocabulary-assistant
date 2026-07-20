@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Add Words - Word World{% endblock %}
+{% block content %}
+<div class="container">
+    <h1>&#10133; Add New Words</h1>
+
+    <div class="section">
+        <form method="POST" class="add-form">
+            <div class="form-group">
+                <label for="word">&#128214; Word *</label>
+                <input type="text" id="word" name="word" required placeholder="e.g. curious">
+            </div>
+            <div class="form-group">
+                <label for="meaning">&#128161; Meaning *</label>
+                <input type="text" id="meaning" name="meaning" required placeholder="e.g. eager to know or learn something">
+            </div>
+            <div class="form-group">
+                <label for="example">&#128172; Example Sentence</label>
+                <input type="text" id="example" name="example" placeholder="e.g. The curious cat explored every room.">
+            </div>
+            <div class="form-group">
+                <label for="category">&#127991; Category</label>
+                <select id="category" name="category">
+                    <option value="general">&#127758; General</option>
+                    <option value="academic">&#127891; Academic</option>
+                    <option value="science">&#128300; Science</option>
+                    <option value="literature">&#128214; Literature</option>
+                    <option value="technology">&#128187; Technology</option>
+                    <option value="nature">&#127795; Nature</option>
+                    <option value="emotions">&#128150; Emotions</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">&#10133; Add This Word!</button>
+        </form>
+    </div>
+
+    <div class="section">
+        <h2>&#128640; Quick Import</h2>
+        <p class="hint">Type one word per line: word - meaning</p>
+        <textarea id="import-area" rows="6" placeholder="happy - feeling pleasure contentment&#10;brave - ready to face danger&#10;gentle - kind and soft"></textarea>
+        <button class="btn btn-secondary" onclick="importWords()">&#128229; Import Words!</button>
+        <div id="import-result"></div>
+    </div>
+
+    <div class="section">
+        <h2>&#127775; Quick Add Words</h2>
+        <p style="font-weight:600; color: var(--text-light); margin-bottom:1rem;">Click a word to add it instantly!</p>
+        <div class="sample-words">
+            <button class="sample-btn" onclick="addSample('curious','eager to know or learn','The curious cat explored every room.','general')">&#128049; curious</button>
+            <button class="sample-btn" onclick="addSample('brave','ready to face danger','The brave knight fought the dragon.','general')">&#129490; brave</button>
+            <button class="sample-btn" onclick="addSample('enormous','very large in size','The enormous whale swam in the ocean.','general')">&#128051; enormous</button>
+            <button class="sample-btn" onclick="addSample('gleeful','full of joy and happiness','The gleeful children played in the park.','emotions')">&#128142; gleeful</button>
+            <button class="sample-btn" onclick="addSample('swift','happening quickly','The swift rabbit ran across the field.','general')">&#128007; swift</button>
+            <button class="sample-btn" onclick="addSample('mysterious','hard to understand or explain','The mysterious box glowed in the dark.','general')">&#128302; mysterious</button>
+            <button class="sample-btn" onclick="addSample('delicate','very soft and gentle','The delicate flower swayed in the breeze.','nature')">&#127803; delicate</button>
+            <button class="sample-btn" onclick="addSample('ancient','very old, from long ago','The ancient tree stood for 500 years.','general')">&#127793; ancient</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

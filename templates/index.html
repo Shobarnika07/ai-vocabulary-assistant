@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Home - Word World{% endblock %}
+{% block content %}
+<div class="dashboard">
+    <h1>&#127752; Welcome to Word World! &#127752;</h1>
+
+    <div class="stats-grid">
+        <div class="stat-card blue">
+            <div class="stat-emoji">&#128218;</div>
+            <div class="stat-number">{{ total }}</div>
+            <div class="stat-label">Words to Learn</div>
+        </div>
+        <div class="stat-card green">
+            <div class="stat-emoji">&#127891;</div>
+            <div class="stat-number">{{ learned }}</div>
+            <div class="stat-label">Words Mastered</div>
+        </div>
+        <div class="stat-card orange">
+            <div class="stat-emoji">&#9200;</div>
+            <div class="stat-number">{{ due }}</div>
+            <div class="stat-label">Ready to Review</div>
+        </div>
+        <div class="stat-card purple">
+            <div class="stat-emoji">&#127775;</div>
+            <div class="stat-number">{{ reviewed_today }}</div>
+            <div class="stat-label">Reviewed Today</div>
+        </div>
+    </div>
+
+    {% if due_words %}
+    <div class="section">
+        <h2>&#128205; Words Waiting for You</h2>
+        <div class="word-list">
+            {% for w in due_words %}
+            <div class="word-card">
+                <div class="word-info">
+                    <span class="word">{{ w.word }}</span>
+                    <span class="meaning">{{ w.meaning }}</span>
+                </div>
+                <span class="badge">{{ w.category }}</span>
+            </div>
+            {% endfor %}
+        </div>
+        <br>
+        <a href="{{ url_for('quiz') }}" class="btn btn-primary">&#127921; Start Quiz!</a>
+    </div>
+    {% else %}
+    <div class="section">
+        <div class="empty-state">
+            <div class="empty-emoji">&#127881;</div>
+            <p>All caught up! Add more words or come back later!</p>
+            <br>
+            <a href="{{ url_for('add_word') }}" class="btn btn-success">&#10133; Add New Words</a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if words %}
+    <div class="section">
+        <h2>&#128218; My Word Collection ({{ total }})</h2>
+        <div class="word-list">
+            {% for w in words|reverse %}
+            <div class="word-card" data-id="{{ w.id }}">
+                <div class="word-info">
+                    <span class="word">{{ w.word }}</span>
+                    <span class="meaning">{{ w.meaning }}</span>
+                    {% if w.example %}<span class="example">"{{ w.example }}"</span>{% endif %}
+                </div>
+                <div class="word-meta">
+                    <span class="badge">{{ w.category }}</span>
+                    <span class="rep-count">x{{ w.repetitions }}</span>
+                    <button class="btn-delete" onclick="deleteWord({{ w.id }})" title="Delete word">&#10005;</button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

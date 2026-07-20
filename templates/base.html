@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Word World{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="floating-bg">
+        <div class="cloud c1"></div>
+        <div class="cloud c2"></div>
+        <div class="cloud c3"></div>
+        <div class="star s1">&#11088;</div>
+        <div class="star s2">&#127775;</div>
+        <div class="star s3">&#11088;</div>
+        <div class="star s4">&#127775;</div>
+    </div>
+
+    <nav>
+        <a href="{{ url_for('index') }}" class="nav-brand">
+            <span class="brand-icon">&#127912;</span>
+            Word World
+        </a>
+        <div class="nav-links">
+            <a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>
+                <span class="nav-icon">&#127968;</span>Home
+            </a>
+            <a href="{{ url_for('add_word') }}" {% if request.endpoint == 'add_word' %}class="active"{% endif %}>
+                <span class="nav-icon">&#10133;</span>Add Words
+            </a>
+            <a href="{{ url_for('quiz') }}" {% if request.endpoint == 'quiz' %}class="active"{% endif %}>
+                <span class="nav-icon">&#127921;</span>Quiz
+            </a>
+            <a href="{{ url_for('stats') }}" {% if request.endpoint == 'stats' %}class="active"{% endif %}>
+                <span class="nav-icon">&#127942;</span>My Progress
+            </a>
+        </div>
+        <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main>{% block content %}{% endblock %}</main>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
